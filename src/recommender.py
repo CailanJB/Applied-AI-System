@@ -1,5 +1,5 @@
 from typing import List, Dict, Tuple, Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 import csv
 from pathlib import Path
 
@@ -40,12 +40,67 @@ class Recommender:
         self.songs = songs
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
-        # TODO: Implement recommendation logic
-        return self.songs[:k]
+        if k <= 0 or not self.songs:
+            return []
+
+        prefs = _prefs_from_user_profile(user)
+        scored_songs = [
+            (song, score_song(prefs, asdict(song))[0])
+            for song in self.songs
+        ]
+        scored_songs.sort(key=lambda item: item[1], reverse=True)
+        return [song for song, _ in scored_songs[:k]]
 
     def explain_recommendation(self, user: UserProfile, song: Song) -> str:
-        # TODO: Implement explanation logic
-        return "Explanation placeholder"
+        prefs = _prefs_from_user_profile(user)
+        _, explanation = score_song(prefs, asdict(song))
+        return explanation
+
+def _prefs_from_user_profile(user: UserProfile) -> Dict:
+    """
+    Converts UserProfile into the preference dictionary expected by score_song.
+    """
+    return {
+        "genre": user.favorite_genre,
+        "mood": user.favorite_mood,
+        "energy": user.target_energy,
+        "acousticness": 0.8 if user.likes_acoustic else 0.2,
+        "danceability": 0.6,
+    }
+
+def _song_from_dict(song_dict: Dict) -> Song:
+    """
+    Builds a Song dataclass from a song dictionary.
+    """
+    return Song(
+        id=int(song_dict["id"]),
+        title=str(song_dict["title"]),
+        artist=str(song_dict["artist"]),
+        genre=str(song_dict["genre"]),
+        mood=str(song_dict["mood"]),
+        energy=float(song_dict["energy"]),
+        tempo_bpm=float(song_dict["tempo_bpm"]),
+        valence=float(song_dict["valence"]),
+        danceability=float(song_dict["danceability"]),
+        acousticness=float(song_dict["acousticness"]),
+    )
+
+def _user_profile_from_prefs(user_prefs: Dict) -> UserProfile:
+    """
+    Converts functional user preferences into UserProfile for OOP helpers.
+    """
+    acoustic_pref = user_prefs.get("acousticness", 0.5)
+    if isinstance(acoustic_pref, bool):
+        likes_acoustic = acoustic_pref
+    else:
+        likes_acoustic = float(acoustic_pref) >= 0.5
+
+    return UserProfile(
+        favorite_genre=str(user_prefs.get("genre", "")),
+        favorite_mood=str(user_prefs.get("mood", "")),
+        target_energy=float(user_prefs.get("energy", 0.0)),
+        likes_acoustic=likes_acoustic,
+    )
 
 def load_songs(csv_path: str) -> List[Dict]:
     """
@@ -139,10 +194,17 @@ def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tup
     if k <= 0 or not songs:
         return []
 
-    scored_songs: List[Tuple[Dict, float, str]] = []
-    for song in songs:
-        score, explanation = score_song(user_prefs, song)
-        scored_songs.append((song, score, explanation))
+    song_objects = [_song_from_dict(song) for song in songs]
+    user_profile = _user_profile_from_prefs(user_prefs)
+    recommender = Recommender(song_objects)
+    top_song_objects = recommender.recommend(user_profile, k=k)
 
-    scored_songs.sort(key=lambda item: item[1], reverse=True)
-    return scored_songs[:k]
+    results: List[Tuple[Dict, float, str]] = []
+    profile_prefs = _prefs_from_user_profile(user_profile)
+    for song in top_song_objects:
+        song_dict = asdict(song)
+        score, _ = score_song(profile_prefs, song_dict)
+        explanation = recommender.explain_recommendation(user_profile, song)
+        results.append((song_dict, score, explanation))
+
+    return results
