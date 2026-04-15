@@ -48,53 +48,7 @@ Here is an Overview for the recomendation system:
 Notes: System might prioritze energy closeness since for me energy is one of the biggets factors in liking a song. Therefore system may have bias to those who like energy in songs as the defying factor. 
 Here is the algorithm recipe, end to end:
 
-Start with user preferences:
-Read the user’s target values:
-genre
-mood
-energy
-acousticness
-danceability
 
-Score each song on a 0 to 10 scale
-Give fixed points for category matches:
-Genre exact match: +3.0
-Mood exact match: +2.0
-Give similarity points for numeric features:
-Energy closeness: up to +2.5
-Acousticness closeness: up to +1.5
-Danceability closeness: up to +1.0
-
-Closeness formula for each numeric feature:
-similarity = 1 - absolute difference
-points = weight × similarity
-clamp at minimum 0 if needed
-Build final score and explanation
-Add all points to get one total score per song (max 10.0).
-Save a short explanation of why it scored that way:
-which categories matched
-how close each numeric feature was
-Rank and select recommendations
-Sort songs by score from highest to lowest.
-Return top k songs as recommendations.
-Output each result as:
-song
-score
-explanation
-That is the full recipe: rule-based category points + numeric similarity points, then sort and take top result
-
-scoring: add up all socres for each category. 
-Explain your design in plain language.
-
-Some prompts to answer:
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
 
 ---
 
@@ -168,6 +122,7 @@ Write 1 to 2 paragraphs here about what you learned:
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
 
+I learned that recomdners use a mix of two approach to make recomendations. Content based filtering and collaborative filtering. Content based filtering uses user preferences for recomendations where collaborative filtering makes recomendations on what other people like that you may also like. These recomenders all boil down to a mathmeatical formula that performs some distance calculation to see how similar your listenign history or watch history is to other people. However, bias can show up in these systems because not everyone likes the same things so the recomendations can be more in the direction of features that a large vareity of people perfer like mood or genre, where others may prfer lyricism or storytelling in music.
 
 ---
 
@@ -275,4 +230,24 @@ A few sentences about what you learned:
 - What surprised you about how your system behaved
 - How did building this change how you think about real music recommenders
 - Where do you think human judgment still matters, even if the model seems "smart"
+
+1. My biggest learning moment of the project was realziing how recomendation systems all just boil down to some mathematical formula that is used to benefit billions of people.
+
+2. Using AI tools helped clarify implementation decisions like similarity calculations and score calculations. I needed to double check during the begging stages of the similarity because it was scaling to large numbers like 1000 which was too big to get good recomendations.
+
+3. It suprised how recomendation systems can seem so complex but are really just simple algorithms that we learn during coursework just applied into a context.
+
+4. I would try using a Machine learnign model using unsupervised learnign using methods like clustering to make recomendations. 
+
+#Images for recomendation outputs
+![alt text](image-1.png)
+
+
+#STRESS TEST MAIN.PY SCREENSHOTS:
+#Testing algorithm on diffrent inputs screenshots
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
 
