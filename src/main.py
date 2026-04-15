@@ -14,6 +14,7 @@ from recommender import load_songs, recommend_songs
 
 def main() -> None:
     songs = load_songs("data/songs.csv") 
+    print(f"Loaded Songs: {len(songs)} ")
 
     # Taste profile used for content-based comparison
     user_prefs = {
