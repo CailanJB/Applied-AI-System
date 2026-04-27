@@ -1,21 +1,101 @@
-id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
-11,City Cipher,Night Verse,hip hop,confident,0.74,96,0.62,0.81,0.12
-12,Glass Aurora,North Quartet,classical,peaceful,0.22,64,0.58,0.18,0.97
-13,Island Signal,Golden Tide,reggae,optimistic,0.55,88,0.83,0.77,0.61
-14,Dust Road Anthem,Cedar Miles,country,nostalgic,0.49,102,0.68,0.59,0.73
-15,Neon Lift,Pulse Harbor,house,euphoric,0.88,126,0.79,0.91,0.08
-16,Velvet Afterglow,June Meridian,r&b,romantic,0.52,84,0.74,0.69,0.44
-17,Iron Horizon,Black Atlas,metal,rebellious,0.94,168,0.41,0.47,0.03
-18,Pine Trail Letters,Hollow Creek,folk,wistful,0.36,76,0.57,0.42,0.91
-19,Midnight Freight,River Ash,blues,gritty,0.46,92,0.38,0.50,0.87
-20,Sunset Parade,Luna Brava,latin,celebratory,0.81,112,0.86,0.89,0.27
+id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,lyrics,description,album,release_year,popularity
+1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,"Waking up to the city lights, feeling alive and bright...",An uplifting pop song about morning energy in the city.,Urban Sunrise,2022,90
+2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,"Coding late into the night, beats keeping me right...",Chill lofi beats perfect for late-night coding sessions.,Late Night Sessions,2021,85
+3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,"Running through the storm, thunder in my veins...",High-energy rock track with intense guitar riffs.,Thunder Road,2023,78
+4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,"Rain tapping on the window, books all around...",Peaceful lofi music for studying in the library.,Study Beats,2020,82
+5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,"Pumping iron, feeling strong, hero in the gym...",Motivational pop song for workout sessions.,Fitness Anthems,2024,88
+6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,"Floating in space, thoughts drifting away...",Ambient electronic music evoking space exploration.,Cosmic Journeys,2022,70
+7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,"Sipping coffee, stories unfolding slow...",Relaxed jazz for coffee shop atmospheres.,Cafe Vibes,2019,75
+8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,"Driving through the night, neon lights flashing...",Synthwave track for nighttime drives.,Retro Nights,2023,80
+9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,"Focused on the task, flow state achieved...",Lofi beats to maintain concentration.,Productivity Beats,2021,87
+10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,"Lights on the rooftop, dancing in the night...",Indie pop song about city rooftop parties.,City Nights,2022,76
+11,City Cipher,Night Verse,hip hop,confident,0.74,96,0.62,0.81,0.12,"Decoding the city, verses flowing free...",Confident hip hop with clever wordplay.,Urban Poetry,2024,79
+12,Glass Aurora,North Quartet,classical,peaceful,0.22,64,0.58,0.18,0.97,"Aurora lights dancing, glass instruments playing...",Peaceful classical piece inspired by northern lights.,Northern Lights,2018,65
+13,Island Signal,Golden Tide,reggae,optimistic,0.55,88,0.83,0.77,0.61,"Island vibes calling, signal strong and clear...",Optimistic reggae about island life.,Tropical Waves,2020,72
+14,Dust Road Anthem,Cedar Miles,country,nostalgic,0.49,102,0.68,0.59,0.73,"Driving down the dust road, memories in the wind...",Nostalgic country song about rural life.,Country Roads,2019,74
+15,Neon Lift,Pulse Harbor,house,euphoric,0.88,126,0.79,0.91,0.08,"Elevator rising, neon lights lifting spirits...",Euphoric house music for clubbing.,Club Essentials,2023,83
+16,Velvet Afterglow,June Meridian,r&b,romantic,0.52,84,0.74,0.69,0.44,"After the sunset, velvet skies glowing...",Romantic R&B ballad about love's afterglow.,Love Songs,2021,81
+17,Iron Horizon,Black Atlas,metal,rebellious,0.94,168,0.41,0.47,0.03,"Iron will against the horizon, rebellion rising...",Heavy metal track with rebellious themes.,Metal Mayhem,2022,69
+18,Pine Trail Letters,Hollow Creek,folk,wistful,0.36,76,0.57,0.42,0.91,"Walking pine trails, letters from the past...",Wistful folk song about nostalgia.,Forest Tales,2020,68
+19,Midnight Freight,River Ash,blues,gritty,0.46,92,0.38,0.50,0.87,"Freight train at midnight, blues in the air...",Gritty blues about hard times.,Blues Nights,2017,66
+20,Sunset Parade,Luna Brava,latin,celebratory,0.81,112,0.86,0.89,0.27,"Parade at sunset, celebrating life...",Celebratory Latin music for festivals.,Fiesta Beats,2023,77
+21,Ocean Breeze,Aqua Waves,pop,relaxed,0.65,100,0.75,0.85,0.30,"Waves crashing on the shore, feeling free forever more...",A soothing pop track about beach relaxation.,Summer Vibes,2023,75
+22,Urban Nights,City Lights,electronic,energetic,0.90,130,0.80,0.92,0.05,"City lights shining bright, dancing all night long...",An upbeat electronic song for nightlife.,Nightlife Chronicles,2024,80
+23,Forest Whisper,Nature Sounds,ambient,calm,0.20,70,0.60,0.30,0.95,"Leaves rustling in the wind, whispers of the forest deep...",Ambient music inspired by nature.,Woodland Dreams,2022,60
+24,Heartbeat,Pulse Beat,rock,passionate,0.88,140,0.70,0.75,0.10,"Heartbeat pounding loud, love in the air all around...",A passionate rock anthem about love.,Passion Play,2023,85
+25,Starlight Serenade,Cosmic Harmony,classical,serene,0.25,50,0.65,0.20,0.98,"Stars twinkling above, serenade in the night sky...",A classical piece evoking starry nights.,Celestial Symphony,2021,70
+26,Electric Dreams,Synth Nova,electronic,energetic,0.95,135,0.85,0.95,0.02,"Electric currents flowing, dreams coming alive...",High-energy electronic track for futuristic vibes.,Digital Horizons,2024,82
+27,Mountain Echo,Alpine Echo,folk,peaceful,0.30,85,0.65,0.45,0.88,"Echoes in the mountains, peace in the air...",Folk song about mountain tranquility.,Mountain Songs,2019,71
+28,Desert Mirage,Sand Mirage,country,nostalgic,0.50,95,0.70,0.55,0.75,"Mirages in the desert, memories calling...",Country ballad about desert adventures.,Desert Trails,2020,73
+29,Cyber Punk,Neon Punk,synthwave,rebellious,0.92,145,0.50,0.80,0.15,"Cyber streets, punk attitude...",Synthwave with rebellious cyberpunk themes.,Neon Rebellion,2023,79
+30,Rainy Day Blues,Misty Notes,blues,melancholic,0.40,85,0.35,0.50,0.80,"Rain falling, blues playing...",Melancholic blues for rainy days.,Rainy Moods,2018,67
+31,Tropical Paradise,Island Vibes,reggae,happy,0.60,90,0.90,0.85,0.50,"Palm trees swaying, paradise found...",Happy reggae about tropical life.,Island Paradise,2021,78
+32,Industrial Beat,Factory Pulse,industrial,intense,0.88,150,0.45,0.70,0.20,"Machines pounding, industrial might...",Intense industrial music.,Factory Sounds,2022,64
+33,Moonlight Sonata,Lunar Strings,classical,serene,0.20,55,0.60,0.25,0.99,"Moonlight shining, sonata playing...",Serene classical piece.,Lunar Melodies,2016,72
+34,Street Dance,Urban Groove,hip hop,confident,0.78,100,0.75,0.88,0.10,"Streets alive, dance moves...",Confident hip hop for street dancing.,Urban Groove,2024,84
+35,Autumn Leaves,Falling Leaves,jazz,relaxed,0.35,75,0.55,0.60,0.85,"Leaves falling, autumn calling...",Relaxed jazz about autumn.,Seasonal Jazz,2019,76
+36,Volcano Eruption,Lava Flow,metal,aggressive,0.96,170,0.30,0.40,0.05,"Volcano erupting, lava flowing...",Aggressive metal track.,Volcanic Fury,2023,68
+37,Silent Night,Quiet Stars,ambient,calm,0.15,65,0.50,0.20,0.96,"Silent night, stars shining...",Calm ambient music.,Starry Nights,2020,69
+38,Carnival Rhythms,Fiesta Drums,latin,celebratory,0.85,115,0.95,0.92,0.25,"Carnival drums, rhythms flowing...",Celebratory Latin rhythms.,Carnival Beats,2022,81
+39,Winter Frost,Ice Crystals,classical,peaceful,0.25,60,0.55,0.30,0.95,"Frost on the ground, winter peace...",Peaceful classical for winter.,Winter Symphony,2017,70
+40,Soulful Groove,Deep Soul,r&b,romantic,0.55,80,0.80,0.75,0.40,"Soulful melodies, groove deep...",Romantic R&B groove.,Soul Grooves,2021,80
+41,Punk Rock Riot,Rebel Riot,punk,rebellious,0.94,160,0.40,0.65,0.08,"Punk riot, rebellion loud...",Rebellious punk rock.,Riot Sounds,2023,77
+42,Ocean Waves,Sea Sounds,ambient,relaxed,0.30,70,0.70,0.35,0.90,"Waves crashing, ocean calling...",Relaxed ambient ocean sounds.,Ocean Ambience,2018,74
+43,Cowboy Boots,Dusty Boots,country,confident,0.65,105,0.75,0.70,0.60,"Cowboy boots, dusty trails...",Confident country song.,Cowboy Tales,2020,75
+44,Techno Pulse,Digital Pulse,techno,energetic,0.97,140,0.85,0.90,0.01,"Techno beats, pulse racing...",Energetic techno track.,Techno Waves,2024,83
+45,Gospel Choir,Heavenly Voices,gospel,uplifting,0.70,110,0.95,0.60,0.30,"Gospel voices, heaven calling...",Uplifting gospel music.,Heavenly Choirs,2019,79
+46,Indie Dreams,Dreamy Indie,indie pop,dreamy,0.50,120,0.80,0.78,0.45,"Indie dreams, floating away...",Dreamy indie pop.,Dreamy Nights,2022,77
+47,Heavy Metal Thunder,Thunder Metal,metal,intense,0.95,165,0.35,0.50,0.04,"Thunder crashing, metal roaring...",Intense heavy metal.,Thunder Metal,2023,71
+48,Jazz Lounge,Smooth Jazz,jazz,sophisticated,0.40,95,0.65,0.55,0.75,"Jazz lounge, smooth vibes...",Sophisticated jazz.,Lounge Jazz,2020,78
+49,Reggae Sunset,Sunset Reggae,reggae,optimistic,0.58,92,0.88,0.80,0.55,"Sunset reggae, optimism high...",Optimistic reggae.,Sunset Vibes,2021,76
+50,Electronic Odyssey,Odyssey Synth,electronic,adventurous,0.85,125,0.75,0.85,0.10,"Electronic odyssey, adventure awaits...",Adventurous electronic.,Synth Odyssey,2024,82
+51,Folk Tales,Storyteller Folk,folk,storytelling,0.45,78,0.60,0.50,0.82,"Folk tales, stories told...",Storytelling folk music.,Folk Stories,2019,73
+52,Hip Hop Flow,Flow Masters,hip hop,smooth,0.72,98,0.70,0.82,0.15,"Hip hop flow, masters rapping...",Smooth hip hop.,Flow Masters,2023,81
+53,Classical Elegance,Elegant Strings,classical,elegant,0.28,58,0.62,0.22,0.97,"Elegant strings, classical beauty...",Elegant classical.,String Elegance,2018,74
+54,Pop Explosion,Pop Blast,pop,explosive,0.90,130,0.88,0.95,0.12,"Pop explosion, energy bursting...",Explosive pop track.,Pop Explosions,2024,86
+55,Blues Guitar,Guitar Blues,blues,soulful,0.48,88,0.42,0.55,0.78,"Blues guitar, soul pouring out...",Soulful blues guitar.,Guitar Blues,2017,69
+56,Ambient Drift,Drifting Sounds,ambient,drifting,0.22,68,0.58,0.28,0.93,"Ambient drift, sounds floating...",Drifting ambient music.,Sound Drift,2020,71
+57,Latin Fiesta,Fiesta Latin,latin,festive,0.83,118,0.92,0.90,0.28,"Latin fiesta, celebration loud...",Festive Latin music.,Fiesta Latin,2022,80
+58,Rock Anthem,Anthem Rock,rock,anthemic,0.89,148,0.78,0.72,0.08,"Rock anthem, crowds cheering...",Anthemic rock song.,Rock Anthems,2023,84
+59,Lofi Study,Study Lofi,lofi,studious,0.38,82,0.63,0.64,0.76,"Lofi study, focus deep...",Lofi for studying.,Study Sessions,2021,85
+60,Synthwave Retro,Retro Synth,synthwave,nostalgic,0.80,115,0.55,0.78,0.18,"Synthwave retro, nostalgia hitting...",Nostalgic synthwave.,Retro Waves,2022,78
+61,Country Roads,Road Country,country,adventurous,0.52,100,0.72,0.62,0.70,"Country roads, adventure calling...",Adventurous country.,Road Adventures,2020,76
+62,House Party,Party House,house,party,0.92,128,0.82,0.94,0.06,"House party, beats dropping...",Party house music.,House Parties,2024,87
+63,R&B Soul,Soul R&B,r&b,soulful,0.57,86,0.76,0.72,0.38,"R&B soul, emotions flowing...",Soulful R&B.,Soul R&B,2021,82
+64,Metal Rage,Rage Metal,metal,raging,0.97,175,0.25,0.45,0.02,"Metal rage, fury unleashed...",Raging metal.,Rage Unleashed,2023,70
+65,Jazz Improv,Improv Jazz,jazz,improvisational,0.42,92,0.68,0.58,0.80,"Jazz improv, notes flying...",Improvisational jazz.,Jazz Improv,2019,77
+66,Reggae Roots,Roots Reggae,reggae,rooted,0.53,85,0.85,0.76,0.65,"Reggae roots, grounded deep...",Rooted reggae.,Roots Reggae,2020,75
+67,Electronic Fusion,Fusion Electro,electronic,fused,0.87,132,0.77,0.87,0.08,"Electronic fusion, genres blending...",Fused electronic.,Fusion Beats,2024,83
+68,Folk Acoustic,Acoustic Folk,folk,acoustic,0.40,80,0.59,0.48,0.89,"Folk acoustic, strings strumming...",Acoustic folk.,Acoustic Tales,2018,72
+69,Hip Hop Beats,Beat Hip Hop,hip hop,beat-driven,0.76,102,0.66,0.84,0.13,"Hip hop beats, rhythm strong...",Beat-driven hip hop.,Beat Masters,2023,80
+70,Classical Piano,Piano Classical,classical,pianistic,0.24,62,0.61,0.26,0.96,"Classical piano, keys dancing...",Pianistic classical.,Piano Classics,2017,73
+71,Pop Hits,Hit Pop,pop,hit-making,0.84,122,0.86,0.89,0.20,"Pop hits, charts climbing...",Hit-making pop.,Pop Hits,2024,89
+72,Blues Harmonica,Harmonica Blues,blues,harmonic,0.44,90,0.40,0.52,0.82,"Blues harmonica, notes wailing...",Harmonic blues.,Harmonica Blues,2016,68
+73,Ambient Space,Space Ambient,ambient,spatial,0.18,72,0.64,0.32,0.91,"Ambient space, cosmos exploring...",Spatial ambient.,Space Sounds,2020,70
+74,Latin Salsa,Salsa Latin,latin,salsatic,0.88,120,0.90,0.93,0.22,"Latin salsa, hips swaying...",Salsatic Latin.,Salsa Beats,2022,81
+75,Rock Ballad,Ballad Rock,rock,balladic,0.60,95,0.50,0.55,0.25,"Rock ballad, emotions raw...",Balladic rock.,Rock Ballads,2021,79
+76,Indie Alternative,Alternative Indie,indie,alternative,0.55,115,0.73,0.76,0.42,"Indie alternative, unique sound...",Alternative indie.,Alternative Waves,2023,78
+77,Metal Thrash,Thrash Metal,metal,thrashing,0.98,180,0.20,0.38,0.01,"Metal thrash, speed unleashed...",Thrashing metal.,Thrash Fury,2024,69
+78,Jazz Fusion,Fusion Jazz,jazz,fused,0.48,98,0.71,0.61,0.72,"Jazz fusion, styles blending...",Fused jazz.,Jazz Fusion,2019,76
+79,Reggae Dub,Dub Reggae,reggae,dubsy,0.56,87,0.82,0.74,0.58,"Reggae dub, echoes deep...",Dubsy reggae.,Dub Vibes,2021,74
+80,Electronic Trance,Trance Electro,electronic,trancing,0.91,138,0.79,0.88,0.04,"Electronic trance, mind expanding...",Trancing electronic.,Trance Worlds,2024,84
+81,Folk Bluegrass,Bluegrass Folk,folk,bluegrassy,0.50,110,0.67,0.53,0.85,"Folk bluegrass, banjos picking...",Bluegrassy folk.,Bluegrass Trails,2020,75
+82,Hip Hop Rap,Rap Hip Hop,hip hop,rapping,0.80,104,0.69,0.86,0.11,"Hip hop rap, words flowing...",Rapping hip hop.,Rap Flows,2023,82
+83,Classical Orchestra,Orchestra Classical,classical,orchestral,0.26,66,0.59,0.24,0.98,"Classical orchestra, symphony grand...",Orchestral classical.,Orchestra Masters,2018,75
+84,Pop Disco,Disco Pop,pop,discotic,0.86,126,0.87,0.91,0.16,"Pop disco, dance floor calling...",Discotic pop.,Disco Fever,2022,85
+85,Blues Slide,Slide Blues,blues,sliding,0.46,94,0.38,0.48,0.84,"Blues slide, guitar sliding...",Sliding blues.,Slide Guitar,2017,67
+86,Ambient Drone,Drone Ambient,ambient,droning,0.14,74,0.52,0.18,0.94,"Ambient drone, sound waves...",Droning ambient.,Drone Waves,2021,68
+87,Latin Merengue,Merengue Latin,latin,merenguic,0.90,125,0.93,0.95,0.20,"Latin merengue, feet moving...",Merenguic Latin.,Merengue Rhythms,2023,79
+88,Rock Punk,Punk Rock,rock,punky,0.93,155,0.42,0.68,0.09,"Rock punk, attitude high...",Punky rock.,Punk Attitude,2024,76
+89,Lofi Chill,Chill Lofi,lofi,chilling,0.36,76,0.61,0.66,0.79,"Lofi chill, vibes relaxed...",Chilling lofi.,Chill Beats,2020,86
+90,Synthwave Vapor,Vapor Synth,synthwave,vaporous,0.82,120,0.58,0.81,0.14,"Synthwave vapor, misty dreams...",Vaporous synthwave.,Vapor Dreams,2023,77
+91,Country Folk,Folk Country,country,folky,0.47,97,0.69,0.57,0.77,"Country folk, stories told...",Folky country.,Folk Country,2019,74
+92,House Deep,Deep House,house,deep,0.89,122,0.74,0.90,0.07,"House deep, bass thumping...",Deep house.,Deep Grooves,2024,83
+93,R&B Neo,Neo R&B,r&b,neo,0.62,88,0.78,0.74,0.35,"R&B neo, modern soul...",Neo R&B.,Neo Soul,2022,81
+94,Metal Death,Death Metal,metal,deathly,0.99,185,0.15,0.35,0.00,"Metal death, darkness falling...",Deathly metal.,Death Reign,2023,66
+95,Jazz Bebop,Bebop Jazz,jazz,beboppy,0.50,100,0.73,0.63,0.78,"Jazz bebop, notes fast...",Beboppy jazz.,Bebop Nights,2018,78
+96,Reggae Ska,Ska Reggae,reggae,skatic,0.61,96,0.86,0.83,0.52,"Reggae ska, horns blowing...",Skatic reggae.,Ska Waves,2021,77
+97,Electronic Dubstep,Dubstep Electro,electronic,dubsteppy,0.94,142,0.81,0.89,0.03,"Electronic dubstep, drops heavy...",Dubsteppy electronic.,Dubstep Drops,2024,85
+98,Folk Celtic,Celtic Folk,folk,celtic,0.43,84,0.64,0.46,0.87,"Folk celtic, heritage rich...",Celtic folk.,Celtic Heritage,2019,73
+99,Hip Hop Trap,Trap Hip Hop,hip hop,trappy,0.84,106,0.71,0.87,0.09,"Hip hop trap, beats trapping...",Trappy hip hop.,Trap Beats,2023,83
+100,Classical Baroque,Baroque Classical,classical,baroque,0.30,70,0.57,0.28,0.99,"Classical baroque, era grand...",Baroque classical.,Baroque Era,2016,76

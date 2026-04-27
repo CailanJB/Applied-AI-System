@@ -19,6 +19,11 @@ class Song:
     valence: float
     danceability: float
     acousticness: float
+    lyrics: str
+    description: str
+    album: str
+    release_year: int
+    popularity: int
 
 @dataclass
 class UserProfile:
@@ -82,6 +87,11 @@ def _song_from_dict(song_dict: Dict) -> Song:
         valence=float(song_dict["valence"]),
         danceability=float(song_dict["danceability"]),
         acousticness=float(song_dict["acousticness"]),
+        lyrics=str(song_dict["lyrics"]),
+        description=str(song_dict["description"]),
+        album=str(song_dict["album"]),
+        release_year=int(song_dict["release_year"]),
+        popularity=int(song_dict["popularity"]),
     )
 
 def _user_profile_from_prefs(user_prefs: Dict) -> UserProfile:
@@ -124,6 +134,11 @@ def load_songs(csv_path: str) -> List[Dict]:
                     "valence": float(row["valence"]),
                     "danceability": float(row["danceability"]),
                     "acousticness": float(row["acousticness"]),
+                    "lyrics": row["lyrics"],
+                    "description": row["description"],
+                    "album": row["album"],
+                    "release_year": int(row["release_year"]),
+                    "popularity": int(row["popularity"]),
                 }
             )
 
