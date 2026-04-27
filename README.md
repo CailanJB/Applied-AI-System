@@ -1,8 +1,8 @@
-# 🎵 Music Recommender Simulation
+# 🎵 Music Recommender Simulation with RAG
 
 ## Project Summary
-
-In this project you will build and explain a small music recommender system.
+Project Objective: Expand Music recomender System by Incorporating a RAG pipeline
+1. Scoring logic is still incorporated now we use RAG for retriveal and Generation
 
 Your goal is to:
 
