@@ -80,18 +80,42 @@ def extract_playlist_id(url: str) -> str:
 # Function 3: fetch_playlist_tracks
 # ---------------------------------------------------------------------------
 
+"""for tracks not in the csv we create new song objects for them via this function"""
+def _infer_mood(valence: float, energy: float) -> str:
+    """Infer a mood label from Spotify's valence and energy values."""
+    if valence > 0.7 and energy > 0.7:
+        return "happy"
+    if valence > 0.7 and energy > 0.4:
+        return "peaceful"
+    if valence > 0.7:
+        return "relaxed"
+    if valence > 0.4 and energy > 0.7:
+        return "optimistic"
+    if valence > 0.4 and energy > 0.4:
+        return "chill"
+    if valence > 0.4:
+        return "focused"
+    if energy > 0.7:
+        return "intense"
+    if energy > 0.4:
+        return "moody"
+    return "melancholic"
+
+
 def fetch_playlist_tracks(
     playlist_id: str,
     client_id: Optional[str] = None,
     client_secret: Optional[str] = None,
 ) -> List[Dict]:
-    """Fetch all tracks from a public Spotify playlist.
+    """Fetch all tracks from a public Spotify playlist, enriched with audio attributes.
 
     Credentials are read from SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET
     environment variables if not passed directly.
 
-    Returns a list of simplified track dicts:
-        { title, artist, album, duration_ms }
+    Returns a list of fully enriched track dicts matching the CSV song schema:
+        { title, artist, album, genre, mood,
+          energy, tempo_bpm, valence, danceability, acousticness,
+          lyrics, description, release_year, popularity }
     """
     cid = client_id or os.environ.get("SPOTIFY_CLIENT_ID")
     secret = client_secret or os.environ.get("SPOTIFY_CLIENT_SECRET")
@@ -105,23 +129,72 @@ def fetch_playlist_tracks(
     auth_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
     sp = spotipy.Spotify(auth_manager=auth_manager)
 
-    tracks: List[Dict] = []
+    # Pass 1: collect raw track stubs and IDs from all playlist pages
+    raw_tracks: List[Dict] = []
     response = sp.playlist_tracks(playlist_id)
-
     while response:
         for item in response["items"]:
             track = item.get("track")
             if not track:
                 continue
-            tracks.append({
-                "title": track["name"],
-                "artist": track["artists"][0]["name"] if track["artists"] else "",
-                "album": track["album"]["name"] if track.get("album") else "",
-                "duration_ms": track.get("duration_ms", 0),
+            artist = track["artists"][0] if track["artists"] else {}
+            raw_tracks.append({
+                "track_id":     track["id"],
+                "artist_id":    artist.get("id", ""),
+                "title":        track["name"],
+                "artist":       artist.get("name", ""),
+                "album":        track["album"]["name"] if track.get("album") else "",
+                "release_date": track["album"].get("release_date", "") if track.get("album") else "",
+                "popularity":   track.get("popularity", 0),
             })
         response = sp.next(response) if response.get("next") else None
 
-    return tracks
+    # Pass 2: batch-fetch audio features (max 100 per call)
+    track_ids = [t["track_id"] for t in raw_tracks if t["track_id"]]
+    audio_features: Dict[str, Dict] = {}
+    for i in range(0, len(track_ids), 100):
+        batch = sp.audio_features(track_ids[i:i + 100]) or []
+        for feat in batch:
+            if feat:
+                audio_features[feat["id"]] = feat
+
+    # Pass 3: batch-fetch artist genres (max 50 per call)
+    artist_ids = list({t["artist_id"] for t in raw_tracks if t["artist_id"]})
+    artist_genres: Dict[str, str] = {}
+    for i in range(0, len(artist_ids), 50):
+        result = sp.artists(artist_ids[i:i + 50])
+        for artist in result.get("artists") or []:
+            if artist:
+                genres = artist.get("genres") or []
+                artist_genres[artist["id"]] = genres[0] if genres else "unknown"
+
+    # Pass 4: assemble enriched track dicts
+    enriched: List[Dict] = []
+    for raw in raw_tracks:
+        feat = audio_features.get(raw["track_id"], {})
+        valence = feat.get("valence", 0.5)
+        energy  = feat.get("energy",  0.5)
+        genre   = artist_genres.get(raw["artist_id"], "unknown")
+        mood    = _infer_mood(valence, energy)
+        release_date = raw.get("release_date", "")
+        enriched.append({
+            "title":        raw["title"],
+            "artist":       raw["artist"],
+            "album":        raw["album"],
+            "genre":        genre,
+            "mood":         mood,
+            "energy":       round(energy, 4),
+            "tempo_bpm":    feat.get("tempo", 0.0),
+            "valence":      round(valence, 4),
+            "danceability": round(feat.get("danceability", 0.5), 4),
+            "acousticness": round(feat.get("acousticness", 0.5), 4),
+            "lyrics":       "",
+            "description":  f"A {mood} {genre} track by {raw['artist']}.",
+            "release_year": int(release_date[:4]) if release_date else 0,
+            "popularity":   raw.get("popularity", 0),
+        })
+
+    return enriched
 
 
 # ---------------------------------------------------------------------------
@@ -140,7 +213,7 @@ def match_tracks_to_csv(
     Matching: case-insensitive exact match on title + artist.
 
     Returns:
-        (matched_csv_songs, unmatched_spotify_tracks)
+    (matched_csv_songs, unmatched_spotify_tracks)
     """
     # Build a lookup key from CSV songs: (title_lower, artist_lower) -> song dict
     csv_index: Dict[Tuple[str, str], Dict] = {
