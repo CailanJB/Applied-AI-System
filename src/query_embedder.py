@@ -37,6 +37,7 @@ def load_embedding_model(model_name: str = "all-MiniLM-L6-v2") -> SentenceTransf
 # Function 2: embed_text
 # ---------------------------------------------------------------------------
 
+"""Takes in text string and encoded into vector embedding"""
 def embed_text(text: str, model: SentenceTransformer) -> np.ndarray:
     """Encode a single string into a (384,) float32 numpy array.
 
@@ -51,6 +52,8 @@ def embed_text(text: str, model: SentenceTransformer) -> np.ndarray:
 # Function 3: embed_playlist_songs
 # ---------------------------------------------------------------------------
 
+"""Matched csv songs result returned from query processing function
+                    """
 def embed_playlist_songs(
     matched_csv_songs: List[Dict],
     unmatched_tracks: List[Dict],
