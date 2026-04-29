@@ -43,6 +43,56 @@ _JSON_SCHEMA = """{
   ]
 }"""
 
+_VALIDATION_SYSTEM_PROMPT = (
+    "You are a query validator for a music recommendation system. "
+    "Determine if the user's input is a meaningful request for music, songs, or playlists. "
+    "A valid query asks for music based on some criteria — mood, activity, genre, artist, "
+    "lyrical theme, or similar. "
+    "An invalid query contains gibberish, random characters, is completely off-topic, "
+    "or has no meaningful music criteria. "
+    "Reply with exactly one word: 'valid' or 'invalid'."
+)
+
+
+# ---------------------------------------------------------------------------
+# Function 0: validate_query
+# ---------------------------------------------------------------------------
+
+def validate_query(
+    text: str,
+    groq_api_key: Optional[str] = None,
+    model: str = "llama3-8b-8192",
+) -> Tuple[bool, str]:
+    """Check whether a query is a meaningful music request.
+
+    Args:
+        text: The raw user query string.
+        groq_api_key: API key (falls back to GROQ_API_KEY env var).
+        model: Groq model to use — smaller/faster than the generation model.
+
+    Returns:
+        (True, "") if valid.
+        (False, error_message) if invalid.
+    """
+    client = Groq(api_key=groq_api_key)
+    response = client.chat.completions.create(
+        model=model,
+        max_tokens=5,
+        messages=[
+            {"role": "system", "content": _VALIDATION_SYSTEM_PROMPT},
+            {"role": "user", "content": text},
+        ],
+    )
+    answer = response.choices[0].message.content.strip().lower()
+    if answer.startswith("valid"):
+        return True, ""
+    return (
+        False,
+        "Your query doesn't appear to be a meaningful music request. "
+        "Try describing a mood, activity, genre, or artist — for example: "
+        "'upbeat songs for a morning run' or 'chill jazz for studying'.",
+    )
+
 
 # ---------------------------------------------------------------------------
 # Function 1: build_prompt_context

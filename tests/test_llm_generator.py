@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-from llm_generator import build_prompt_context, generate_recommendations, lookup_spotify_links
+from llm_generator import build_prompt_context, generate_recommendations, lookup_spotify_links, validate_query
 
 # ---------------------------------------------------------------------------
 # Shared fixtures
@@ -276,3 +276,56 @@ def test_lookup_returns_none_on_api_exception(mock_sp_cls, mock_creds):
     url, preview = lookup_spotify_links("Song", "Artist", client_id="id", client_secret="secret")
     assert url is None
     assert preview is None
+
+
+# ---------------------------------------------------------------------------
+# Group 4: validate_query — mock Groq client
+# ---------------------------------------------------------------------------
+
+def _make_validation_mock(answer: str):
+    mock_client = MagicMock()
+    mock_choice = MagicMock()
+    mock_choice.message.content = answer
+    mock_completion = MagicMock()
+    mock_completion.choices = [mock_choice]
+    mock_client.chat.completions.create.return_value = mock_completion
+    return mock_client
+
+
+@patch("llm_generator.Groq")
+def test_validate_returns_true_for_valid_query(mock_groq_cls):
+    mock_groq_cls.return_value = _make_validation_mock("valid")
+    is_valid, reason = validate_query("chill songs for late night studying")
+    assert is_valid is True
+    assert reason == ""
+
+
+@patch("llm_generator.Groq")
+def test_validate_returns_false_for_garbage(mock_groq_cls):
+    mock_groq_cls.return_value = _make_validation_mock("invalid")
+    is_valid, reason = validate_query("hshshhaahhshs")
+    assert is_valid is False
+    assert isinstance(reason, str) and len(reason) > 0
+
+
+@patch("llm_generator.Groq")
+def test_validate_returns_false_for_partial_gibberish(mock_groq_cls):
+    mock_groq_cls.return_value = _make_validation_mock("invalid")
+    is_valid, reason = validate_query("provide me songs that xgxgscbhcshvsu")
+    assert is_valid is False
+
+
+@patch("llm_generator.Groq")
+def test_validate_tolerates_punctuated_answer(mock_groq_cls):
+    mock_groq_cls.return_value = _make_validation_mock("valid.")
+    is_valid, _ = validate_query("upbeat pop songs")
+    assert is_valid is True
+
+
+@patch("llm_generator.Groq")
+def test_validate_uses_small_fast_model(mock_groq_cls):
+    mock_groq_cls.return_value = _make_validation_mock("valid")
+    validate_query("any query")
+    call_kwargs = mock_groq_cls.return_value.chat.completions.create.call_args[1]
+    assert call_kwargs["model"] == "llama3-8b-8192"
+    assert call_kwargs["max_tokens"] == 5

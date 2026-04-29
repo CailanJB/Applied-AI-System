@@ -22,7 +22,7 @@ from query_embedder import load_embedding_model, build_query_embedding
 from query_processor import parse_user_input, fetch_playlist_tracks, match_tracks_to_csv
 from rag_retriever import retrieve_candidates
 from reranker import rerank_candidates
-from llm_generator import generate_recommendations
+from llm_generator import generate_recommendations, validate_query
 
 load_dotenv()
 
@@ -131,7 +131,20 @@ def show_query_interface(index, songs: list, model) -> None:
         if not query.strip():
             st.warning("Please enter a query or playlist URL before searching.")
             return
-        _run_pipeline(query.strip(), prefs, index, songs, model)
+
+        q = query.strip()
+
+        # Spotify playlist URLs are structurally valid by definition — skip LLM guard
+        is_playlist_url = "open.spotify.com/playlist/" in q
+
+        if not is_playlist_url:
+            with st.spinner("Checking your query..."):
+                is_valid, reason = validate_query(q)
+            if not is_valid:
+                st.error(reason)
+                return
+
+        _run_pipeline(q, prefs, index, songs, model)
 
 
 def _run_pipeline(query: str, user_prefs: dict, index, songs: list, model) -> None:

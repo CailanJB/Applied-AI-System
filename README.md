@@ -4,26 +4,36 @@
 Project Objective: Expand Music recomender System by Incorporating a RAG pipeline
 1. Scoring logic is still incorporated now we use RAG for retriveal and Generation
 
-Your goal is to:
 
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
+
+SYSTEM DESIGN WORKFLOW/How the System works:
+
+
 
 Replace this paragraph with your own summary of what your version does.
 
+
 Modern recomender systems use a mix of signalks like behavioral signals like recording songs skipped, replayed, lked, or saved. They use item understanding like tempo, energy, speech, langugae, genre, to provide the best recomednations based on users preferences.
 
-Our System:
+How the scoring system works during re-ranking phase :
 Our content-based recomender will use a content-based filtering approach that uses song attributes to predict what users will love next. The flow is as follows: Our recomender compares each song to a user taste profile and scores how closely the song matches that profile using a mathematical formula with genre matchm mood match, acoustic preferences, and energy closeness so songs are rewarded for being near the users target values. The formula to calculate this is as follows: score = (genre match score + mood match + score + energy match score + acoustic prefernce score + dancebillity score). 
 the scores for each category are calculated as follows: let similarity =  1 - (song category score - user profile category score) for each category. points = weight * (similarity)
 Overview: compute per category points for each song related to user profile then add the points. if the scores between the song and user are an exact match provide +2.5 points if not caluclate using formula above. 
 
 Our system priortizes the mood and energy first since in my opinion is what makes someone like specific songs. The final scores for all songs are ranked from worst to best and the top k songs are returned as recomendations. 
 
-## How The System Works
-Here is an Overview for the recomendation system:
+## How The System Works with RAG
+PHASE 1: Convert local csv songs to text, to convert to embeddings to store in Vector DB.
+PHASE 2: QUery process: validate user input gaurdraul/
+Phase 3: Produce 384 float embedding of user query.
+phase 4: use embedding produced in phase 3 to perform semantic search aganist the vector index built in  return set of top 20 most similar songs.
+phase 5: re-rank songs using existing coring logic taking into consideration the numerical data.
+Phase 6: Generation, provide explanations for the recomended songs and provide spotify links for the user to see the song. 
+
+##Overview on how the re-ranking system works
+- From phase 4 via retrieval the top 20 songs are returned using vector similarity. This only uses categorical data so we pass these songs to our scoring system to also take into consideration the numerical data.
+How the User-Preferences are Generated:
+- In the front end user gets prompted what there prefernces are.
 1. Start with user preferences
 2. Read the users targets values(most prefered categories)(example prefernces values not every user will have)
     - genre: 0.444
