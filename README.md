@@ -1,16 +1,12 @@
 # 🎵 Music Recommender Simulation with RAG
 
+## DEMO LOOM WALKTHROUGH:
+https://www.loom.com/share/6b5f931b22694bf3aff43562b6712160
+
+
 ## Project Summary
 Project Objective: Expand Music recomender System by Incorporating a RAG pipeline
 1. Scoring logic is still incorporated now we use RAG for retriveal and Generation
-
-
-
-SYSTEM DESIGN WORKFLOW/How the System works:
-
-
-
-Replace this paragraph with your own summary of what your version does.
 
 
 Modern recomender systems use a mix of signalks like behavioral signals like recording songs skipped, replayed, lked, or saved. They use item understanding like tempo, energy, speech, langugae, genre, to provide the best recomednations based on users preferences.
@@ -26,11 +22,15 @@ Our system priortizes the mood and energy first since in my opinion is what make
 PHASE 1: Convert local csv songs to text, to convert to embeddings to store in Vector DB.
 PHASE 2: QUery process: validate user input gaurdraul/
 Phase 3: Produce 384 float embedding of user query.
+- two formats for user query
+-plain text, in that acse we use SentenceTransformer Module to covert to vector embedding
+- text + playlist url
+- we assign a vector to the users playlist that captures the overall vibe of their playlist
 phase 4: use embedding produced in phase 3 to perform semantic search aganist the vector index built in  return set of top 20 most similar songs.
 phase 5: re-rank songs using existing coring logic taking into consideration the numerical data.
 Phase 6: Generation, provide explanations for the recomended songs and provide spotify links for the user to see the song. 
 
-##Overview on how the re-ranking system works
+## Overview on how the re-ranking system works(PHASE 4 OF RAG PIPELINE)
 - From phase 4 via retrieval the top 20 songs are returned using vector similarity. This only uses categorical data so we pass these songs to our scoring system to also take into consideration the numerical data.
 How the User-Preferences are Generated:
 - In the front end user gets prompted what there prefernces are.
@@ -132,7 +132,7 @@ Write 1 to 2 paragraphs here about what you learned:
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
 
-I learned that recomdners use a mix of two approach to make recomendations. Content based filtering and collaborative filtering. Content based filtering uses user preferences for recomendations where collaborative filtering makes recomendations on what other people like that you may also like. These recomenders all boil down to a mathmeatical formula that performs some distance calculation to see how similar your listenign history or watch history is to other people. However, bias can show up in these systems because not everyone likes the same things so the recomendations can be more in the direction of features that a large vareity of people perfer like mood or genre, where others may prfer lyricism or storytelling in music.
+I learned that recomenders use a mix of two approach to make recomendations. Content based filtering and collaborative filtering. Content based filtering uses user preferences for recomendations where collaborative filtering makes recomendations on what other people like that you may also like. These recomenders all boil down to a mathmeatical formula that performs some distance calculation to see how similar your listenign history or watch history is to other people. However, bias can show up in these systems because not everyone likes the same things so the recomendations can be more in the direction of features that a large vareity of people perfer like mood or genre, where others may prfer lyricism or storytelling in music.
 
 ---
 
@@ -241,7 +241,7 @@ A few sentences about what you learned:
 - How did building this change how you think about real music recommenders
 - Where do you think human judgment still matters, even if the model seems "smart"
 
-1. My biggest learning moment of the project was realziing how recomendation systems all just boil down to some mathematical formula that is used to benefit billions of people.
+1. Learning how RAG can be implemented into music recomendation systems was really interesting and amazing to see how it all boils down to mathematics. 
 
 2. Using AI tools helped clarify implementation decisions like similarity calculations and score calculations. I needed to double check during the begging stages of the similarity because it was scaling to large numbers like 1000 which was too big to get good recomendations.
 
@@ -249,15 +249,6 @@ A few sentences about what you learned:
 
 4. I would try using a Machine learnign model using unsupervised learnign using methods like clustering to make recomendations. 
 
-#Images for recomendation outputs
-![alt text](image-1.png)
-
-
-#STRESS TEST MAIN.PY SCREENSHOTS:
-#Testing algorithm on diffrent inputs screenshots
-![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
+5. I think human judgement still matters when the AI is implementing core features. For example when I implemented my new scoring logic to take into account the RAG system AI suggested to just infer users preferences based on the songs in their playlist, or how they prompted the system. However, I came up with the more efficent idea to just ask the user before hand what are their prefernces in music to get better recomendations. In addition if they wanted more variety still giving them the option to change their prefernces. 
+## Recomendation outputs in assests.md 
 
