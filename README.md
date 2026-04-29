@@ -1,4 +1,4 @@
-# 🎵 Music Recommender Simulation with RAG
+# 🎵 Music Recommender Simulation Implemented with RAG
 
 ## DEMO LOOM WALKTHROUGH:
 https://www.loom.com/share/6b5f931b22694bf3aff43562b6712160
