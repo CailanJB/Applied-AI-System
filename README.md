@@ -18,8 +18,8 @@ Overview: compute per category points for each song related to user profile then
 
 Our system priortizes the mood and energy first since in my opinion is what makes someone like specific songs. The final scores for all songs are ranked from worst to best and the top k songs are returned as recomendations. 
 
-## How The System Works with RAG
-PHASE 1: Convert local csv songs to text, to convert to embeddings to store in Vector DB.
+## How The System Works with RAG(IMPLEMENTATION FIX)
+PHASE 1: Convert local csv songs to text, to convert to embeddings to store in our Vector DB. 
 PHASE 2: QUery process: validate user input gaurdraul/
 Phase 3: Produce 384 float embedding of user query.
 - two formats for user query
