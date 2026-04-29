@@ -63,7 +63,7 @@ Prompts:"List features for scoring logic algorithm for recomendations"
 ## 6. Limitations and Bias 
 
 Where the system struggles or behaves unfairly. 
-
+Limitation in RAG system now: since the dataset used for retriveal is only a fixed amount there is high bias for these western american songs. In addition some of the songs in the dataset from the orignal repo are made up so spotify cant find any urls for them during the generation phase.
 Prompts: Identiy potential biases in scoring logic
 Limitations and Bias: Genre is very strong and can create genre bubbles that outweigh other categories. Dancebillity is somewhat flattened for everyone meaning two users with opposite dance preferences get similar recomendations. Energy gap can potentially bias toward mainstream artist when everyone may not be a fan of mainstream artist.
 - Features it does not consider: Dancebility has little impact on recomendations 
