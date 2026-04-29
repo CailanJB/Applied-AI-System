@@ -170,7 +170,13 @@ def _run_pipeline(query: str, user_prefs: dict, index, songs: list, model) -> No
                 )
                 return
             except Exception as exc:
-                st.error(f"Could not fetch playlist from Spotify: {exc}")
+                if "401" in str(exc):
+                    st.error(
+                        "This playlist is private. "
+                        "Open it in Spotify, go to ••• → Share, and make it public, then try again."
+                    )
+                else:
+                    st.error(f"Could not fetch playlist from Spotify: {exc}")
                 return
 
         # Phase 3: convert the query into a 384-dim embedding

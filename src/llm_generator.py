@@ -61,7 +61,7 @@ _VALIDATION_SYSTEM_PROMPT = (
 def validate_query(
     text: str,
     groq_api_key: Optional[str] = None,
-    model: str = "llama3-8b-8192",
+    model: str = "llama-3.3-70b-versatile",
 ) -> Tuple[bool, str]:
     """Check whether a query is a meaningful music request.
 
