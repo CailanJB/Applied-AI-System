@@ -22,6 +22,7 @@ from query_embedder import load_embedding_model, build_query_embedding
 from query_processor import parse_user_input, fetch_playlist_tracks, match_tracks_to_csv
 from rag_retriever import retrieve_candidates
 from reranker import rerank_candidates
+from llm_generator import generate_recommendations
 
 load_dotenv()
 
@@ -168,26 +169,65 @@ def _run_pipeline(query: str, user_prefs: dict, index, songs: list, model) -> No
         # Phase 5: re-rank the 20 candidates by user preference score (0–10)
         results = rerank_candidates(candidates, user_prefs, k=10)
 
-    # Display ranked results
-    st.subheader(f"Top {len(results)} Recommendations")
+        # Phase 6: LLM narrative generation + Spotify link enrichment
+        try:
+            llm_output = generate_recommendations(
+                context_text=parsed["context_text"],
+                user_prefs=user_prefs,
+                results=results,
+            )
+        except Exception as exc:
+            st.warning(f"LLM generation failed ({exc}). Showing raw results.")
+            llm_output = None
 
-    for i, (song, score, explanation) in enumerate(results, 1):
-        with st.container():
-            col_info, col_score = st.columns([3, 1])
+    # Display results
+    if llm_output:
+        st.markdown(f"## {llm_output['playlist_title']}")
+        st.info(llm_output["summary"])
+        st.divider()
 
-            with col_info:
-                st.markdown(f"**{i}. {song['title']}** — *{song['artist']}*")
-                st.caption(
-                    f"{song['genre'].title()}  ·  {song['mood'].title()}  ·  "
-                    f"{song.get('album', '')}  ·  {song.get('release_year', '')}"
-                )
-                # Explanation from score_song() shows which attributes matched
-                st.caption(f"Why: {explanation}")
+        for i, entry in enumerate(llm_output["songs"], 1):
+            with st.container():
+                col_info, col_score = st.columns([3, 1])
 
-            with col_score:
-                st.metric("Score", f"{score:.1f} / 10")
+                with col_info:
+                    st.markdown(f"**{i}. {entry['title']}** — *{entry['artist']}*")
+                    song = entry["song_dict"]
+                    st.caption(
+                        f"{song['genre'].title()}  ·  {song['mood'].title()}  ·  "
+                        f"{song.get('album', '')}  ·  {song.get('release_year', '')}"
+                    )
+                    st.caption(entry["explanation"])
+                    if entry.get("spotify_url"):
+                        st.link_button("Listen on Spotify", entry["spotify_url"])
+                    if entry.get("preview_url"):
+                        st.audio(entry["preview_url"], format="audio/mp3")
 
-            st.divider()
+                with col_score:
+                    st.metric("Score", f"{entry['score']:.1f} / 10")
+
+                st.divider()
+
+    else:
+        # Fallback: raw Phase 5 results without LLM narrative
+        st.subheader(f"Top {len(results)} Recommendations")
+
+        for i, (song, score, explanation) in enumerate(results, 1):
+            with st.container():
+                col_info, col_score = st.columns([3, 1])
+
+                with col_info:
+                    st.markdown(f"**{i}. {song['title']}** — *{song['artist']}*")
+                    st.caption(
+                        f"{song['genre'].title()}  ·  {song['mood'].title()}  ·  "
+                        f"{song.get('album', '')}  ·  {song.get('release_year', '')}"
+                    )
+                    st.caption(f"Why: {explanation}")
+
+                with col_score:
+                    st.metric("Score", f"{score:.1f} / 10")
+
+                st.divider()
 
 
 # ---------------------------------------------------------------------------

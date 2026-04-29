@@ -47,7 +47,7 @@ def song_to_text(song: Dict) -> str:
         str: Combined text representation of the song
         
     Example:
-        song = {"title": "Blinding Lights", "artist": "The Weeknd", "genre": "pop", "mood": "happy", ...}
+        song = {"title": "Blinding Lights", "artist": "The Weekend", "genre": "pop", "mood": "happy", ...}
         text = song_to_text(song)
         # Returns: "Blinding Lights The Weeknd pop happy energetic The Weeknd Blinding Lights..."
     """
